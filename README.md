@@ -26,8 +26,9 @@ The Gas Detection Alarm System is a Raspberry Pi-based project that aims to enha
 1. Clone the repository: `git clone https://github.com/SINGHAJS/Gas-Detection-Alarm-System.git`
 2. Connect the Gas Sensor and I2C LCD1602 Module to the Raspberry Pi 3B.
 3. Open the project directory on the Raspberry Pi.
-4. Enter the virtual environment. 
-5. Executre `pip3 install -r requirements.txt`
+4. Open terminal in the project directory and enter `pipenv install`
+5. In terminal enter `pipenv shell`
+6. Once the virtual environment activates, enter `python3 src/main.py`
 
 ## Usage
 
