@@ -3,7 +3,6 @@ import RPi.GPIO as GPIO
 import time
 import board
 import busio
-
 from lcd import update_gas_alarm_status
 
 
@@ -42,7 +41,7 @@ def start_gas_analysis_process():
         i2c = busio.I2C(board.SCL, board.SDA)
         pcf = PCF8591(i2c)  # Create instance of PCF8591
         GPIO.setup(DO, GPIO.IN)
-        analyse_gas(pcf)
+        analyse_gas(pcf)  # Starts analysing the gas
     except KeyboardInterrupt:
         release_gpio()
     finally:

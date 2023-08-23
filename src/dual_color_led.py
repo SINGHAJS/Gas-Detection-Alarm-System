@@ -1,5 +1,4 @@
 import RPi.GPIO as GPIO
-import time
 
 LED_RED_PIN = 20
 LED_GREEN_PIN = 16
@@ -10,10 +9,12 @@ GPIO.setup(LED_GREEN_PIN, GPIO.OUT)
 GPIO.output(LED_RED_PIN, GPIO.LOW)
 GPIO.output(LED_GREEN_PIN, GPIO.LOW)
 
+# Create PWM objects
 led_red = GPIO.PWM(LED_RED_PIN, 2000)
 led_green = GPIO.PWM(LED_GREEN_PIN, 2000)
 
-# Set default light state to off
+
+# Starts the PWM signal on the GPIO pins
 def start_dual_color_led():
     led_red.start(0)
     led_green.start(0)
