@@ -14,8 +14,9 @@ led_red = GPIO.PWM(LED_RED_PIN, 2000)
 led_green = GPIO.PWM(LED_GREEN_PIN, 2000)
 
 # Set default light state to off
-led_red.start(0)
-led_green.start(0)
+def start_dual_color_led():
+    led_red.start(0)
+    led_green.start(0)
 
 
 # Function to change the light to red if high gas detected
