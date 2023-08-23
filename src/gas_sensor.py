@@ -27,7 +27,7 @@ def analyse_gas(pcf):
             # Set previous gas value to the current gas value
             prev_gas_value = current_gas_value
 
-        time.sleep(2)
+        time.sleep(0.5)
 
 
 # Releases resources used by GPIO
