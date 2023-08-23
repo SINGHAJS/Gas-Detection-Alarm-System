@@ -3,11 +3,19 @@ import RPi.GPIO as GPIO
 import time
 import board
 import busio
+import threading
 from lcd import update_gas_alarm_status
 
 
 DO = 17  # Digital Output: 17
 GPIO.setmode(GPIO.BCM)  # Set GPIO mode to use BCM number scheme
+gas_alarm_status_thread = None # Initialise update_gas_alarm_status thread
+
+
+# Create a update_gas_alarm_status thread and starts it
+def start_update_gas_alarm_status_thread(gas_value):
+    gas_alarm_status_thread = threading.Thread(target=update_gas_alarm_status, args=(gas_value,))
+    gas_alarm_status_thread.start() # Start thread
 
 
 # Analyse gas
@@ -21,9 +29,11 @@ def analyse_gas(pcf):
         print(f'CURRENT GAS READING: {current_gas_value}')
 
         if current_gas_value != prev_gas_value:  # Gas value has changed
-            # Validate gas value and update LCD display message
-            update_gas_alarm_status(current_gas_value)
-            # Set previous gas value to the current gas value
+            
+            # Start the update_gas_alarm_status thread
+            start_update_gas_alarm_status_thread(current_gas_value)
+
+            # Set previous gas value to the current gas values
             prev_gas_value = current_gas_value
 
         time.sleep(0.5)
@@ -41,8 +51,9 @@ def start_gas_analysis_process():
         i2c = busio.I2C(board.SCL, board.SDA)
         pcf = PCF8591(i2c)  # Create instance of PCF8591
         GPIO.setup(DO, GPIO.IN)
-        analyse_gas(pcf)  # Starts analysing the gas
+        analyse_gas(pcf) # start analysing gas
     except KeyboardInterrupt:
         release_gpio()
     finally:
         release_gpio()
+        gas_alarm_status_thread.join()
